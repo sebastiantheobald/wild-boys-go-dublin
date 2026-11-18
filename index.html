@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#07130d">
+<title>Wild Boys go Dublin</title>
+<meta name="apple-mobile-web-app-title" content="Dublin">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<style>
+:root{
+  --bg:#07130d; --bg2:#0d2318; --card:rgba(255,255,255,.055); --line:rgba(255,255,255,.12);
+  --txt:#eef5ef; --mut:#9db5a5; --green:#2fd27a; --gold:#f2c14e; --red:#ff6b6b;
+  --r:20px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,sans-serif;
+  padding-bottom:calc(40px + env(safe-area-inset-bottom));overflow-x:hidden}
+h1,h2,h3{font-family:ui-rounded,"SF Pro Rounded",-apple-system,system-ui,sans-serif;margin:0}
+a{color:var(--gold);text-decoration:none}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:52vh;padding:calc(env(safe-area-inset-top) + 48px) 22px 34px;
+  display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;isolation:isolate}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.55;z-index:-1;animation:float 14s ease-in-out infinite alternate}
+.b1{width:340px;height:340px;background:#139a52;top:-80px;left:-90px}
+.b2{width:280px;height:280px;background:#f2a93b;top:40px;right:-120px;animation-delay:-4s;opacity:.35}
+.b3{width:300px;height:300px;background:#0c6b6b;bottom:-120px;left:30%;animation-delay:-8s}
+@keyframes float{to{transform:translate(40px,50px) scale(1.15)}}
+.clover{position:absolute;z-index:-1;font-size:22px;opacity:.0;animation:rise 9s linear infinite}
+@keyframes rise{0%{transform:translateY(40px) rotate(0);opacity:0}15%{opacity:.5}100%{transform:translateY(-70vh) rotate(260deg);opacity:0}}
+.kicker{font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.title{font-size:clamp(46px,14vw,74px);line-height:.92;font-weight:900;margin:10px 0 14px;
+  background:linear-gradient(100deg,#fff 0%,#c9ffd9 30%,var(--gold) 50%,#c9ffd9 70%,#fff 100%);
+  background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:shine 6s linear infinite}
+@keyframes shine{to{background-position:-250% 0}}
+.dates{color:var(--mut);font-weight:600}
+
+/* ---------- Nav ---------- */
+nav{position:sticky;top:0;z-index:20;padding:calc(env(safe-area-inset-top) + 8px) 0 10px;
+  background:rgba(7,19,13,.78);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);
+  border-bottom:1px solid var(--line)}
+nav .row{display:flex;gap:8px;overflow-x:auto;padding:0 16px;scrollbar-width:none}
+nav .row::-webkit-scrollbar{display:none}
+nav a{flex:none;padding:8px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);
+  color:var(--txt);font-size:14px;font-weight:600;transition:.25s}
+nav a.on{background:var(--gold);color:#1b1404;border-color:var(--gold)}
+
+/* ---------- Sections ---------- */
+section{padding:30px 16px 6px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;margin:0 6px 14px}
+.sec-h h2{font-size:28px;font-weight:800}
+.sec-h small{color:var(--mut);font-weight:600}
+.tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 9px;border-radius:999px;background:rgba(47,210,122,.15);color:var(--green)}
+.tag.gold{background:rgba(242,193,78,.15);color:var(--gold)}
+.tag.red{background:rgba(255,107,107,.15);color:var(--red)}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:12px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.card h3{font-size:18px;margin-bottom:6px}
+.card p{margin:6px 0 0;color:var(--mut)}
+
+/* flights */
+.flight{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;margin-top:10px}
+.flight .ap{font:900 34px/1 ui-rounded,-apple-system,sans-serif}
+.flight .t{font-weight:700;margin-top:4px}
+.flight .z{font-size:12px;color:var(--mut)}
+.flight .r{text-align:right}
+.plane{position:relative;width:70px;height:2px;background:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 11px)}
+.plane::after{content:"✈︎";position:absolute;top:-13px;left:0;font-size:20px;color:var(--gold);animation:fly 3.2s ease-in-out infinite}
+@keyframes fly{0%{left:-6px;opacity:0}15%{opacity:1}85%{opacity:1}100%{left:58px;opacity:0}}
+
+/* timeline */
+.tl{position:relative;margin:0 0 8px;padding-left:26px}
+.tl::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(var(--green),var(--gold));border-radius:2px;opacity:.6}
+.it{position:relative;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 14px;margin-bottom:10px;transition:.3s}
+.it::before{content:"";position:absolute;left:-23px;top:17px;width:12px;height:12px;border-radius:50%;
+  background:var(--bg);border:2px solid var(--green)}
+.it .tm{font:800 15px/1 ui-rounded,-apple-system,sans-serif;color:var(--gold);font-variant-numeric:tabular-nums}
+.it .ti{font-weight:700;margin-top:5px}
+.it .de{color:var(--mut);font-size:14px;margin-top:3px}
+.it.past{opacity:.45}
+.it.now{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 10px 40px -10px rgba(242,193,78,.5)}
+.it.now::before{background:var(--gold);border-color:var(--gold);animation:pulse 1.6s infinite}
+.it.now .tm::after{content:"  ● JETZT";color:var(--gold);font-size:11px;letter-spacing:.1em}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(242,193,78,.7)}100%{box-shadow:0 0 0 12px rgba(242,193,78,0)}}
+.it.warn{border-color:rgba(255,107,107,.5)}
+.it.warn::before{border-color:var(--red)}
+
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:12px;font-size:14px;font-weight:700;
+  background:rgba(242,193,78,.12);color:var(--gold);border:1px solid rgba(242,193,78,.3)}
+.btn.g{background:rgba(47,210,122,.12);color:var(--green);border-color:rgba(47,210,122,.3)}
+.code{font:700 15px ui-monospace,Menlo,monospace;letter-spacing:.04em;padding:8px 12px;border-radius:12px;
+  background:rgba(0,0,0,.35);border:1px dashed var(--line);display:inline-block;margin-top:8px;user-select:all;-webkit-user-select:all;cursor:pointer}
+.code.ok{border-color:var(--green);color:var(--green)}
+
+.note{border-left:3px solid var(--gold);padding:10px 14px;border-radius:0 14px 14px 0;background:rgba(242,193,78,.07);
+  color:#f5e6c0;font-size:14px;margin:4px 0 12px}
+.note.red{border-color:var(--red);background:rgba(255,107,107,.08);color:#ffd9d9}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:18px;margin-bottom:10px;overflow:hidden}
+summary{list-style:none;padding:14px 16px;font-weight:700;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:22px;color:var(--gold);transition:.3s}
+details[open] summary::after{transform:rotate(45deg)}
+details .in{padding:0 16px 14px;color:var(--mut)}
+
+/* checklist */
+.chk{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line);cursor:pointer}
+.chk:last-child{border:0}
+.chk input{appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--mut);
+  display:grid;place-content:center;transition:.2s;margin:0}
+.chk input::after{content:"✓";font-weight:900;color:#06140c;transform:scale(0);transition:.2s}
+.chk input:checked{background:var(--green);border-color:var(--green)}
+.chk input:checked::after{transform:scale(1)}
+.chk input:checked + span{color:var(--mut);text-decoration:line-through}
+.chk em{margin-left:auto;font-style:normal;color:var(--mut);font-size:13px}
+.prog{height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin:4px 0 12px}
+.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold));transition:width .4s}
+
+footer{text-align:center;color:var(--mut);font-size:13px;padding:30px 20px 0}
+footer b{display:block;font-size:30px;margin-bottom:6px}
+
+/* scroll reveal where supported */
+@supports (animation-timeline: view()){
+  .card,.it,details{animation:reveal linear both;animation-timeline:view();animation-range:entry 0% entry 35%}
+  @keyframes reveal{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <span class="clover" style="left:12%;bottom:0;animation-delay:0s">☘️</span>
+  <span class="clover" style="left:46%;bottom:0;animation-delay:3s">☘️</span>
+  <span class="clover" style="left:78%;bottom:0;animation-delay:6s">🍺</span>
+  <span class="clover" style="left:30%;bottom:0;animation-delay:7.5s">☘️</span>
+  <div class="kicker">Frankfurt → Dublin</div>
+  <h1 class="title">Wild Boys<br>go Dublin</h1>
+  <div class="dates">19. bis 22. November 2026 · Point A Hotel Liberties</div>
+</header>
+
+<nav><div class="row" id="navrow">
+  <a href="#nacht">🌙 Heute Nacht</a>
+  <a href="#fluege">✈️ Flüge</a>
+  <a href="#do">Do</a>
+  <a href="#fr">Fr</a>
+  <a href="#sa">Sa</a>
+  <a href="#so">So</a>
+  <a href="#infos">Hotel & Infos</a>
+  <a href="#pack">Packliste</a>
+</div></nav>
+
+<!-- ================= HEUTE NACHT ================= -->
+<section id="nacht">
+  <div class="sec-h"><h2>Heute Nacht</h2><small>Do 19.11. · deutsche Zeit</small></div>
+
+  <div class="note red"><b>Achtung Terminal 2:</b> T2 ist seit Juni 2026 wegen Umbau geschlossen. Die SkyLine-Station dort bleibt laut Fraport in Betrieb, ob man nachts zu Fuß reinkommt, ist aber nicht sicher. Am Parkhaus kurz das Personal fragen (rund um die Uhr da), sonst Plan B.</div>
+
+  <div class="tl">
+    <div class="it" data-t="2026-11-19T04:00:00+01:00"><div class="tm">04:00</div><div class="ti">Aufstehen</div><div class="de">Ausweis, Handy, Ladekabel, Bordkarte in der Wallet checken.</div></div>
+    <div class="it" data-t="2026-11-19T04:25:00+01:00"><div class="tm">04:25</div><div class="ti">Losfahren</div><div class="de">Ca. 1 Stunde bis zum Parkhaus.</div>
+      <div class="btns"><a class="btn" href="https://maps.apple.com/?daddr=Unterschweinstiege+2,+60549+Frankfurt&dirflg=d">🚗 Navi Apple Maps</a><a class="btn g" href="https://www.google.com/maps/dir/?api=1&destination=Unterschweinstiege+2,+60549+Frankfurt+am+Main">Google Maps</a></div></div>
+    <div class="it" data-t="2026-11-19T05:25:00+01:00"><div class="tm">05:25</div><div class="ti">Parkhaus „800m to Airport“</div><div class="de">Unterschweinstiege 2 · ohne Shuttle gebucht (39 €) · Einfahrtshöhe max. 1,95 m.<br>Personal nach dem Fußweg zur SkyLine fragen.</div>
+      <div class="btns"><a class="btn" href="tel:+4961076969881">📞 Parkhaus anrufen</a></div></div>
+    <div class="it" data-t="2026-11-19T05:35:00+01:00"><div class="tm">05:35</div><div class="ti">Zu Fuß Richtung Terminal 2</div><div class="de">Ca. 10 bis 15 Min. Ziel ist die SkyLine-Station T2 auf <b>Ebene 4</b> (Nordseite der Halle). Schildern „Sky Line“ folgen.</div></div>
+    <div class="it" data-t="2026-11-19T05:50:00+01:00"><div class="tm">05:50</div><div class="ti">SkyLine nach Terminal 1</div><div class="de">Kostenlos, ohne Bordkarte, fährt rund um die Uhr. Ca. 2 Min Fahrt. Richtung <b>Terminal 1</b> nehmen, nicht die Linie zu T3.</div></div>
+    <div class="it" data-t="2026-11-19T06:00:00+01:00"><div class="tm">06:00</div><div class="ti">Terminal 1</div><div class="de">Gepäck abgeben (falls nötig), dann direkt durch die Sicherheitskontrolle. Morgens ist dort viel los.</div></div>
+    <div class="it" data-t="2026-11-19T06:40:00+01:00"><div class="tm">≈ 06:40</div><div class="ti">Boarding</div><div class="de">Zeit und Gate auf der Bordkarte prüfen.</div></div>
+    <div class="it" data-t="2026-11-19T07:20:00+01:00"><div class="tm">07:20</div><div class="ti">Abflug FRA ✈️</div><div class="de">Landung Dublin 08:25 Ortszeit (Uhr 1 Std zurück).</div></div>
+  </div>
+
+  <details>
+    <summary>🅱️ Plan B: kein Zugang zur SkyLine an T2</summary>
+    <div class="in">Direkt zu Fuß zu Terminal 1 laufen (ca. 30 Min, Route vorher in Maps prüfen) oder Taxi rufen. Mit Abfahrt 05:35 ist dafür noch genug Puffer.
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&origin=Unterschweinstiege+2,+60549+Frankfurt&destination=Frankfurt+Airport+Terminal+1&travelmode=walking">🚶 Fußweg zu T1</a></div>
+    </div>
+  </details>
+  <details>
+    <summary>✅ Check vor dem Losfahren</summary>
+    <div class="in">Terminal auf der Bordkarte prüfen: Alle früheren T2-Airlines fliegen jetzt ab Terminal 3. Online eingecheckt? Powerbank ins Handgepäck, nicht in den Koffer.</div>
+  </details>
+</section>
+
+<!-- ================= FLÜGE ================= -->
+<section id="fluege">
+  <div class="sec-h"><h2>Flüge</h2><small>Deine eigenen</small></div>
+  <div class="card">
+    <span class="tag">Hinflug · Do 19.11.</span>
+    <div class="flight">
+      <div><div class="ap">FRA</div><div class="t">07:20</div><div class="z">deutsche Zeit</div></div>
+      <div class="plane"></div>
+      <div class="r"><div class="ap">DUB</div><div class="t">08:25</div><div class="z">Ortszeit Dublin</div></div>
+    </div>
+  </div>
+  <div class="card">
+    <span class="tag gold">Rückflug · So 22.11.</span>
+    <div class="flight">
+      <div><div class="ap">DUB</div><div class="t">05:10</div><div class="z">Ortszeit Dublin</div></div>
+      <div class="plane"></div>
+      <div class="r"><div class="ap">FRA</div><div class="t">08:10</div><div class="z">deutsche Zeit</div></div>
+    </div>
+  </div>
+  <div class="note">Die Gruppe fliegt Do 09:55 (an 11:00) und So 09:10 (an FRA 12:10). Dublin ist 1 Stunde hinter Deutschland.</div>
+</section>
+
+<!-- ================= DONNERSTAG ================= -->
+<section id="do">
+  <div class="sec-h"><h2>Donnerstag</h2><small>19.11. · Ortszeit</small></div>
+  <div class="tl">
+    <div class="it" data-t="2026-11-19T08:25:00+00:00"><div class="tm">08:25</div><div class="ti">Du landest in Dublin</div><div class="de">Ca. 2,5 Std Vorsprung vor der Gruppe. Idee: mit dem Dublin Express vorfahren, Tasche im Hotel abgeben, Kaffee.</div></div>
+    <div class="it" data-t="2026-11-19T11:00:00+00:00"><div class="tm">11:00</div><div class="ti">Gruppe landet</div><div class="de">Dublin Express ab Terminal 2 (voraussichtlich), ca. 40 Min bis Christ Church Cathedral.</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Christ+Church+Cathedral+Dublin">📍 Christ Church</a></div></div>
+    <div class="it" data-t="2026-11-19T12:30:00+00:00"><div class="tm">12:30</div><div class="ti">Ankunft Hotel</div><div class="de">Taschen abgeben (Aufbewahrung bis Check-in).</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Point+A+Hotel+Dublin+The+Liberties">📍 Point A Hotel</a></div></div>
+    <div class="it" data-t="2026-11-19T13:00:00+00:00"><div class="tm">≈ 13:00</div><div class="ti">Frühstück / Mittagessen</div><div class="de">The Stage Door Cafe, 11 Essex St E · ca. 15 Min zu Fuß. Danach Stadt erkunden.</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=The+Stage+Door+Cafe+11+Essex+St+E+Dublin">📍 Stage Door Cafe</a></div></div>
+    <div class="it" data-t="2026-11-19T15:00:00+00:00"><div class="tm">15:00</div><div class="ti">Check-in Zimmer</div><div class="de">Duschen, frisch machen.</div></div>
+    <div class="it" data-t="2026-11-19T16:30:00+00:00"><div class="tm">16:30</div><div class="ti">Abfahrt: Kultur</div><div class="de">Trinity College und Umgebung.</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Trinity+College+Dublin">📍 Trinity College</a></div></div>
+    <div class="it" data-t="2026-11-19T18:30:00+00:00"><div class="tm">18:30 – 22:30</div><div class="ti">BrewDog am Canal 🍺</div><div class="de">Essen, Shuffleboard, Brauerei. Reserviert auf <b>Raupbach</b>.</div>
+      <div class="code" data-copy>DMN-16968154339</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=BrewDog+Dublin+Canal">📍 BrewDog</a><a class="btn g" href="https://brewdog.com/pages/bars/dublin">Website</a></div></div>
+    <div class="it" data-t="2026-11-19T22:30:00+00:00"><div class="tm">danach</div><div class="ti">Abend offen</div></div>
+  </div>
+</section>
+
+<!-- ================= FREITAG ================= -->
+<section id="fr">
+  <div class="sec-h"><h2>Freitag</h2><small>20.11. · Ortszeit</small></div>
+  <div class="tl">
+    <div class="it" data-t="2026-11-20T08:30:00+00:00"><div class="tm">08:30 – 10:00</div><div class="ti">Frühstück im Hotel</div><div class="de">Geöffnet 7 bis 11 Uhr.</div></div>
+    <div class="it" data-t="2026-11-20T10:30:00+00:00"><div class="tm">10:30 – 11:00</div><div class="ti">Abfahrt</div></div>
+    <div class="it" data-t="2026-11-20T12:30:00+00:00"><div class="tm">12:30</div><div class="ti">Guinness Storehouse Tour</div><div class="de">Reserviert auf <b>Raupbach</b>.</div>
+      <div class="code" data-copy>904653541</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Guinness+Storehouse+Dublin">📍 Storehouse</a></div></div>
+    <div class="it" data-t="2026-11-20T14:30:00+00:00"><div class="tm">nachmittags</div><div class="ti">Kultur-Runde</div><div class="de">Guinness Open Gate Brewery · St. Patrick's Cathedral · St. Stephen's Green</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=St+Patrick%27s+Cathedral+Dublin">📍 St. Patrick's</a><a class="btn" href="https://www.google.com/maps/search/?api=1&query=St+Stephen%27s+Green+Dublin">📍 Stephen's Green</a></div></div>
+    <div class="it" data-t="2026-11-20T17:00:00+00:00"><div class="tm">zwischendurch</div><div class="ti">Zwischenhydration 🍻</div><div class="de">The Crafty Fox</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=The+Crafty+Fox+Dublin">📍 Crafty Fox</a></div></div>
+    <div class="it warn" data-t="2026-11-20T19:00:00+00:00"><div class="tm">19:00</div><div class="ti">The Old Mill Restaurant</div><div class="de">14 Temple Bar · <b>pünktlich dort sein!</b></div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=The+Old+Mill+Restaurant+14+Temple+Bar+Dublin">📍 Old Mill</a></div></div>
+    <div class="it" data-t="2026-11-20T21:00:00+00:00"><div class="tm">danach</div><div class="ti">Temple Bar o. Ä.</div></div>
+  </div>
+</section>
+
+<!-- ================= SAMSTAG ================= -->
+<section id="sa">
+  <div class="sec-h"><h2>Samstag</h2><small>21.11. · Ortszeit</small></div>
+  <div class="tl">
+    <div class="it" data-t="2026-11-21T08:30:00+00:00"><div class="tm">08:30 – 10:00</div><div class="ti">Frühstück im Hotel</div></div>
+    <div class="it" data-t="2026-11-21T10:30:00+00:00"><div class="tm">10:30 – 11:00</div><div class="ti">Abfahrt: Kultur</div><div class="de">Ha'penny Bridge · Dublin Castle</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Ha%27penny+Bridge+Dublin">📍 Ha'penny Bridge</a><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Dublin+Castle">📍 Dublin Castle</a></div></div>
+    <div class="it" data-t="2026-11-21T13:00:00+00:00"><div class="tm">mittags</div><div class="ti">Sheehan's Pub</div><div class="de">Nicht reserviert, nur Vorschlag.</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Sheehan%27s+Pub+Dublin">📍 Sheehan's</a></div></div>
+    <div class="it" data-t="2026-11-21T14:30:00+00:00"><div class="tm">nachmittags</div><div class="ti">Free Time</div></div>
+    <div class="it" data-t="2026-11-21T19:00:00+00:00"><div class="tm">abends</div><div class="ti">The Brazen Head</div><div class="de">Nicht reserviert, nur Vorschlag. Ältester Pub Irlands.</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=The+Brazen+Head+Dublin">📍 Brazen Head</a></div></div>
+    <div class="it warn" data-t="2026-11-21T21:30:00+00:00"><div class="tm">im Blick behalten</div><div class="ti">Dein Taxi geht um 03:15 🚕</div><div class="de">Koffer vorher packen, Wecker stellen.</div></div>
+  </div>
+</section>
+
+<!-- ================= SONNTAG ================= -->
+<section id="so">
+  <div class="sec-h"><h2>Sonntag</h2><small>22.11. · Ortszeit</small></div>
+  <div class="tl">
+    <div class="it" data-t="2026-11-22T03:00:00+00:00"><div class="tm">03:00</div><div class="ti">Aufstehen</div></div>
+    <div class="it" data-t="2026-11-22T03:15:00+00:00"><div class="tm">03:15</div><div class="ti">Taxi zum Flughafen</div><div class="de">Ca. 25 Min um diese Uhrzeit. Am besten am Abend vorher vorbestellen (z. B. FREENOW).</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=Dublin+Airport&travelmode=driving">🚕 Route DUB</a></div></div>
+    <div class="it" data-t="2026-11-22T03:45:00+00:00"><div class="tm">03:45</div><div class="ti">Dublin Airport</div><div class="de">Sicherheitskontrolle ist frühmorgens oft voll, deshalb der Puffer.</div></div>
+    <div class="it" data-t="2026-11-22T05:10:00+00:00"><div class="tm">05:10</div><div class="ti">Abflug DUB ✈️</div></div>
+    <div class="it" data-t="2026-11-22T07:10:00+00:00"><div class="tm">08:10 DE</div><div class="ti">Landung FRA</div><div class="de">SkyLine T1 → T2, dann zu Fuß zum Parkhaus Unterschweinstiege 2.</div></div>
+  </div>
+  <div class="note">Die Gruppe frühstückt 06:00 bis 06:45 und fährt spätestens 07:15 mit dem Taxi (Abflug 09:10).</div>
+</section>
+
+<!-- ================= INFOS ================= -->
+<section id="infos">
+  <div class="sec-h"><h2>Hotel & Infos</h2></div>
+  <div class="card">
+    <span class="tag">Hotel</span>
+    <h3 style="margin-top:10px">Point A Hotel Dublin Liberties</h3>
+    <p>5 Doppelzimmer auf <b>Raupbach</b> · Check-in ab 15 Uhr · Taschen können bis dahin aufbewahrt werden.</p>
+    <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Point+A+Hotel+Dublin+The+Liberties">📍 Karte</a></div>
+  </div>
+  <div class="card">
+    <span class="tag gold">Reservierungen</span>
+    <p style="color:var(--txt)"><b>BrewDog</b> · Do 18:30</p><div class="code" data-copy>DMN-16968154339</div>
+    <p style="color:var(--txt);margin-top:12px"><b>Guinness Storehouse</b> · Fr 12:30</p><div class="code" data-copy>904653541</div>
+    <p style="color:var(--txt);margin-top:12px"><b>The Old Mill</b> · Fr 19:00</p>
+    <p style="font-size:13px">Alles auf den Namen Raupbach. Code antippen zum Kopieren.</p>
+  </div>
+  <details><summary>🇮🇪 Irland-Basics</summary><div class="in">Zeit: 1 Std zurück. Währung: Euro. Barkeeper im Pub begrüßen gehört dazu. Reisepass mitnehmen (sicherheitshalber, laut Plan).</div></details>
+</section>
+
+<!-- ================= PACKLISTE ================= -->
+<section id="pack">
+  <div class="sec-h"><h2>Packliste</h2><small id="packCount"></small></div>
+  <div class="prog"><i id="packBar"></i></div>
+  <div class="card" id="packlist">
+    <label class="chk"><input type="checkbox" data-k="ausweis"><span>Personalausweis / Reisepass</span></label>
+    <label class="chk"><input type="checkbox" data-k="handy"><span>Handy & Ladekabel</span></label>
+    <label class="chk"><input type="checkbox" data-k="geld"><span>Bargeld & Kreditkarte</span></label>
+    <label class="chk"><input type="checkbox" data-k="power"><span>Powerbank</span><em>Handgepäck</em></label>
+    <label class="chk"><input type="checkbox" data-k="kopf"><span>Kopfhörer</span></label>
+    <label class="chk"><input type="checkbox" data-k="uh"><span>Unterhosen</span><em>5×</em></label>
+    <label class="chk"><input type="checkbox" data-k="socken"><span>Socken</span><em>5 Paar</em></label>
+    <label class="chk"><input type="checkbox" data-k="jeans"><span>Jeans / lange Hose</span><em>2×</em></label>
+    <label class="chk"><input type="checkbox" data-k="shirts"><span>T-Shirts / Oberteile</span><em>5×</em></label>
+    <label class="chk"><input type="checkbox" data-k="pulli"><span>Pullover</span><em>2×</em></label>
+    <label class="chk"><input type="checkbox" data-k="jacke"><span>Regen- & windfeste Jacke</span></label>
+    <label class="chk"><input type="checkbox" data-k="schuhe"><span>Schuhe</span><em>2 Paar</em></label>
+    <label class="chk"><input type="checkbox" data-k="schal"><span>Schal / Mütze</span></label>
+    <label class="chk"><input type="checkbox" data-k="sonne"><span>Sonnenbrille</span><em>nicht im Pub</em></label>
+    <label class="chk"><input type="checkbox" data-k="zahn"><span>Zahnbürste & Zahnpasta</span></label>
+    <label class="chk"><input type="checkbox" data-k="deo"><span>Deo</span></label>
+    <label class="chk"><input type="checkbox" data-k="dusch"><span>Duschgel & Shampoo</span></label>
+    <label class="chk"><input type="checkbox" data-k="haar"><span>Haargel / Puder</span></label>
+    <label class="chk"><input type="checkbox" data-k="medi"><span>Medikamente (Ibu, Kohletabletten …)</span></label>
+    <label class="chk"><input type="checkbox" data-k="nagel"><span>Nagelschere</span><em>Koffer</em></label>
+    <label class="chk"><input type="checkbox" data-k="pinz"><span>Pinzette</span></label>
+  </div>
+</section>
+
+<footer><b>☘️</b>Sláinte, Wild Boys.</footer>
+
+<script>
+(function(){
+
+  /* Timeline: vergangen / jetzt markieren */
+  var items = [].slice.call(document.querySelectorAll(".it[data-t]"));
+  function mark(){
+    var now = Date.now(), cur = null;
+    items.forEach(function(el){
+      var t = new Date(el.getAttribute("data-t")).getTime();
+      el.classList.remove("now","past");
+      if(t <= now) cur = el;
+    });
+    items.forEach(function(el){
+      var t = new Date(el.getAttribute("data-t")).getTime();
+      if(el === cur) el.classList.add("now"); else if(t < now) el.classList.add("past");
+    });
+    return cur;
+  }
+  var cur = mark(); setInterval(mark,60000);
+
+  /* Nav: aktiven Abschnitt hervorheben */
+  var links = [].slice.call(document.querySelectorAll("nav a"));
+  if("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){
+          links.forEach(function(a){
+            var on = a.getAttribute("href") === "#"+e.target.id;
+            a.classList.toggle("on", on);
+            if(on && a.scrollIntoView) a.parentNode.scrollTo({left:a.offsetLeft-16,behavior:"smooth"});
+          });
+        }
+      });
+    },{rootMargin:"-40% 0px -55% 0px"});
+    document.querySelectorAll("section").forEach(function(s){io.observe(s)});
+  }
+
+  /* Codes kopieren */
+  document.querySelectorAll("[data-copy]").forEach(function(el){
+    el.addEventListener("click",function(){
+      var txt = el.textContent.trim();
+      try{ navigator.clipboard.writeText(txt).then(function(){
+        el.classList.add("ok"); var o = el.textContent; el.textContent = "✓ kopiert";
+        setTimeout(function(){el.textContent=o; el.classList.remove("ok")},1200);
+      }); }catch(e){}
+    });
+  });
+
+  /* Packliste merken */
+  var boxes = [].slice.call(document.querySelectorAll("#packlist input"));
+  function upd(){
+    var n = boxes.filter(function(b){return b.checked}).length;
+    document.getElementById("packCount").textContent = n+" / "+boxes.length;
+    document.getElementById("packBar").style.width = (n/boxes.length*100)+"%";
+  }
+  boxes.forEach(function(b){
+    try{ b.checked = localStorage.getItem("wbgd_"+b.dataset.k) === "1"; }catch(e){}
+    b.addEventListener("change",function(){
+      try{ localStorage.setItem("wbgd_"+b.dataset.k, b.checked?"1":"0"); }catch(e){}
+      if(navigator.vibrate) navigator.vibrate(8);
+      upd();
+    });
+  });
+  upd();
+})();
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
+</script>
+</body>
+</html>
