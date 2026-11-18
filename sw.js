@@ -1,5 +1,5 @@
 // Bei jeder Änderung an den Dateien die Versionsnummer erhöhen.
-const CACHE = "dublin-v1";
+const CACHE = "dublin-v2";
 const FILES = ["./", "index.html", "manifest.json", "icon-180.png", "icon-192.png", "icon-512.png"];
 
 self.addEventListener("install", e => {

@@ -47,7 +47,8 @@ a{color:var(--gold);text-decoration:none}
 nav{position:sticky;top:0;z-index:20;padding:calc(env(safe-area-inset-top) + 8px) 0 10px;
   background:rgba(7,19,13,.78);backdrop-filter:saturate(1.6) blur(18px);-webkit-backdrop-filter:saturate(1.6) blur(18px);
   border-bottom:1px solid var(--line)}
-nav .row{display:flex;gap:8px;overflow-x:auto;padding:0 16px;scrollbar-width:none}
+nav .row{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:0 16px;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;touch-action:pan-x;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 28px),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 14px,#000 calc(100% - 28px),transparent 100%)}
+nav .row::after{content:"";flex:none;width:8px}
 nav .row::-webkit-scrollbar{display:none}
 nav a{flex:none;padding:8px 14px;border-radius:999px;background:var(--card);border:1px solid var(--line);
   color:var(--txt);font-size:14px;font-weight:600;transition:.25s}
@@ -115,18 +116,6 @@ summary::after{content:"+";font-size:22px;color:var(--gold);transition:.3s}
 details[open] summary::after{transform:rotate(45deg)}
 details .in{padding:0 16px 14px;color:var(--mut)}
 
-/* checklist */
-.chk{display:flex;align-items:center;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line);cursor:pointer}
-.chk:last-child{border:0}
-.chk input{appearance:none;-webkit-appearance:none;flex:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--mut);
-  display:grid;place-content:center;transition:.2s;margin:0}
-.chk input::after{content:"✓";font-weight:900;color:#06140c;transform:scale(0);transition:.2s}
-.chk input:checked{background:var(--green);border-color:var(--green)}
-.chk input:checked::after{transform:scale(1)}
-.chk input:checked + span{color:var(--mut);text-decoration:line-through}
-.chk em{margin-left:auto;font-style:normal;color:var(--mut);font-size:13px}
-.prog{height:6px;border-radius:6px;background:var(--line);overflow:hidden;margin:4px 0 12px}
-.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--gold));transition:width .4s}
 
 footer{text-align:center;color:var(--mut);font-size:13px;padding:30px 20px 0}
 footer b{display:block;font-size:30px;margin-bottom:6px}
@@ -160,7 +149,6 @@ footer b{display:block;font-size:30px;margin-bottom:6px}
   <a href="#sa">Sa</a>
   <a href="#so">So</a>
   <a href="#infos">Hotel & Infos</a>
-  <a href="#pack">Packliste</a>
 </div></nav>
 
 <!-- ================= HEUTE NACHT ================= -->
@@ -220,7 +208,7 @@ footer b{display:block;font-size:30px;margin-bottom:6px}
 <section id="do">
   <div class="sec-h"><h2>Donnerstag</h2><small>19.11. · Ortszeit</small></div>
   <div class="tl">
-    <div class="it" data-t="2026-11-19T08:25:00+00:00"><div class="tm">08:25</div><div class="ti">Du landest in Dublin</div><div class="de">Ca. 2,5 Std Vorsprung vor der Gruppe. Idee: mit dem Dublin Express vorfahren, Tasche im Hotel abgeben, Kaffee.</div></div>
+    <div class="it" data-t="2026-11-19T08:25:00+00:00"><div class="tm">08:25</div><div class="ti">Du landest in Dublin</div><div class="de">Ca. 2,5 Std Vorsprung vor der Gruppe. Idee: vorfahren, Tasche im Hotel abgeben, Kaffee. Dein 7-Tage-Ticket gilt <b>nicht</b> im Dublin Express, aber in den Dublin-Bus-Linien 16 und 41 ab Flughafen.</div></div>
     <div class="it" data-t="2026-11-19T11:00:00+00:00"><div class="tm">11:00</div><div class="ti">Gruppe landet</div><div class="de">Dublin Express ab Terminal 2 (voraussichtlich), ca. 40 Min bis Christ Church Cathedral.</div>
       <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=Christ+Church+Cathedral+Dublin">📍 Christ Church</a></div></div>
     <div class="it" data-t="2026-11-19T12:30:00+00:00"><div class="tm">12:30</div><div class="ti">Ankunft Hotel</div><div class="de">Taschen abgeben (Aufbewahrung bis Check-in).</div>
@@ -268,7 +256,7 @@ footer b{display:block;font-size:30px;margin-bottom:6px}
     <div class="it" data-t="2026-11-21T14:30:00+00:00"><div class="tm">nachmittags</div><div class="ti">Free Time</div></div>
     <div class="it" data-t="2026-11-21T19:00:00+00:00"><div class="tm">abends</div><div class="ti">The Brazen Head</div><div class="de">Nicht reserviert, nur Vorschlag. Ältester Pub Irlands.</div>
       <div class="btns"><a class="btn" href="https://www.google.com/maps/search/?api=1&query=The+Brazen+Head+Dublin">📍 Brazen Head</a></div></div>
-    <div class="it warn" data-t="2026-11-21T21:30:00+00:00"><div class="tm">im Blick behalten</div><div class="ti">Dein Taxi geht um 03:15 🚕</div><div class="de">Koffer vorher packen, Wecker stellen.</div></div>
+    <div class="it warn" data-t="2026-11-21T21:30:00+00:00"><div class="tm">im Blick behalten</div><div class="ti">Rückreise ab 02:30 🚌</div><div class="de">Koffer vorher packen, Wecker stellen. Nachtabfahrt der Linie 41 heute schon in TFI Live checken.</div></div>
   </div>
 </section>
 
@@ -276,13 +264,19 @@ footer b{display:block;font-size:30px;margin-bottom:6px}
 <section id="so">
   <div class="sec-h"><h2>Sonntag</h2><small>22.11. · Ortszeit</small></div>
   <div class="tl">
-    <div class="it" data-t="2026-11-22T03:00:00+00:00"><div class="tm">03:00</div><div class="ti">Aufstehen</div></div>
-    <div class="it" data-t="2026-11-22T03:15:00+00:00"><div class="tm">03:15</div><div class="ti">Taxi zum Flughafen</div><div class="de">Ca. 25 Min um diese Uhrzeit. Am besten am Abend vorher vorbestellen (z. B. FREENOW).</div>
-      <div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=Dublin+Airport&travelmode=driving">🚕 Route DUB</a></div></div>
-    <div class="it" data-t="2026-11-22T03:45:00+00:00"><div class="tm">03:45</div><div class="ti">Dublin Airport</div><div class="de">Sicherheitskontrolle ist frühmorgens oft voll, deshalb der Puffer.</div></div>
+    <div class="it" data-t="2026-11-22T02:15:00+00:00"><div class="tm">02:15</div><div class="ti">Aufstehen</div></div>
+    <div class="it" data-t="2026-11-22T02:30:00+00:00"><div class="tm">02:30</div><div class="ti">Zu Fuß zur Haltestelle</div><div class="de">Lower Abbey St (Irish Life, nahe O'Connell St), ca. 25 Min vom Hotel.</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&origin=Point+A+Hotel+Dublin+The+Liberties&destination=Lower+Abbey+Street+Dublin&travelmode=walking">🚶 Weg zur Haltestelle</a></div></div>
+    <div class="it" data-t="2026-11-22T03:00:00+00:00"><div class="tm">≈ 03:00</div><div class="ti">Bus 41 → Dublin Airport</div><div class="de">Fährt rund um die Uhr, nachts ca. 30 Min bis zum Flughafen. Gilt mit dem 7-Tage-Ticket. Genaue Abfahrt in TFI Live oder Google Maps prüfen.</div>
+      <div class="btns"><a class="btn" href="https://www.google.com/maps/dir/?api=1&origin=Lower+Abbey+Street+Dublin&destination=Dublin+Airport&travelmode=transit">🚌 Verbindung</a></div></div>
+    <div class="it" data-t="2026-11-22T03:35:00+00:00"><div class="tm">≈ 03:35</div><div class="ti">Dublin Airport</div><div class="de">Sicherheitskontrolle ist frühmorgens oft voll, deshalb der Puffer.</div></div>
     <div class="it" data-t="2026-11-22T05:10:00+00:00"><div class="tm">05:10</div><div class="ti">Abflug DUB ✈️</div></div>
     <div class="it" data-t="2026-11-22T07:10:00+00:00"><div class="tm">08:10 DE</div><div class="ti">Landung FRA</div><div class="de">SkyLine T1 → T2, dann zu Fuß zum Parkhaus Unterschweinstiege 2.</div></div>
   </div>
+  <details>
+    <summary>🅱️ Plan B: Taxi</summary>
+    <div class="in">Falls der Bus nicht passt: Taxi gegen 03:15 ab Hotel, ca. 25 Min. Am besten am Abend vorher in FREENOW vorbestellen.</div>
+  </details>
   <div class="note">Die Gruppe frühstückt 06:00 bis 06:45 und fährt spätestens 07:15 mit dem Taxi (Abflug 09:10).</div>
 </section>
 
@@ -305,34 +299,6 @@ footer b{display:block;font-size:30px;margin-bottom:6px}
   <details><summary>🇮🇪 Irland-Basics</summary><div class="in">Zeit: 1 Std zurück. Währung: Euro. Barkeeper im Pub begrüßen gehört dazu. Reisepass mitnehmen (sicherheitshalber, laut Plan).</div></details>
 </section>
 
-<!-- ================= PACKLISTE ================= -->
-<section id="pack">
-  <div class="sec-h"><h2>Packliste</h2><small id="packCount"></small></div>
-  <div class="prog"><i id="packBar"></i></div>
-  <div class="card" id="packlist">
-    <label class="chk"><input type="checkbox" data-k="ausweis"><span>Personalausweis / Reisepass</span></label>
-    <label class="chk"><input type="checkbox" data-k="handy"><span>Handy & Ladekabel</span></label>
-    <label class="chk"><input type="checkbox" data-k="geld"><span>Bargeld & Kreditkarte</span></label>
-    <label class="chk"><input type="checkbox" data-k="power"><span>Powerbank</span><em>Handgepäck</em></label>
-    <label class="chk"><input type="checkbox" data-k="kopf"><span>Kopfhörer</span></label>
-    <label class="chk"><input type="checkbox" data-k="uh"><span>Unterhosen</span><em>5×</em></label>
-    <label class="chk"><input type="checkbox" data-k="socken"><span>Socken</span><em>5 Paar</em></label>
-    <label class="chk"><input type="checkbox" data-k="jeans"><span>Jeans / lange Hose</span><em>2×</em></label>
-    <label class="chk"><input type="checkbox" data-k="shirts"><span>T-Shirts / Oberteile</span><em>5×</em></label>
-    <label class="chk"><input type="checkbox" data-k="pulli"><span>Pullover</span><em>2×</em></label>
-    <label class="chk"><input type="checkbox" data-k="jacke"><span>Regen- & windfeste Jacke</span></label>
-    <label class="chk"><input type="checkbox" data-k="schuhe"><span>Schuhe</span><em>2 Paar</em></label>
-    <label class="chk"><input type="checkbox" data-k="schal"><span>Schal / Mütze</span></label>
-    <label class="chk"><input type="checkbox" data-k="sonne"><span>Sonnenbrille</span><em>nicht im Pub</em></label>
-    <label class="chk"><input type="checkbox" data-k="zahn"><span>Zahnbürste & Zahnpasta</span></label>
-    <label class="chk"><input type="checkbox" data-k="deo"><span>Deo</span></label>
-    <label class="chk"><input type="checkbox" data-k="dusch"><span>Duschgel & Shampoo</span></label>
-    <label class="chk"><input type="checkbox" data-k="haar"><span>Haargel / Puder</span></label>
-    <label class="chk"><input type="checkbox" data-k="medi"><span>Medikamente (Ibu, Kohletabletten …)</span></label>
-    <label class="chk"><input type="checkbox" data-k="nagel"><span>Nagelschere</span><em>Koffer</em></label>
-    <label class="chk"><input type="checkbox" data-k="pinz"><span>Pinzette</span></label>
-  </div>
-</section>
 
 <footer><b>☘️</b>Sláinte, Wild Boys.</footer>
 
@@ -365,7 +331,6 @@ footer b{display:block;font-size:30px;margin-bottom:6px}
           links.forEach(function(a){
             var on = a.getAttribute("href") === "#"+e.target.id;
             a.classList.toggle("on", on);
-            if(on && a.scrollIntoView) a.parentNode.scrollTo({left:a.offsetLeft-16,behavior:"smooth"});
           });
         }
       });
@@ -383,23 +348,6 @@ footer b{display:block;font-size:30px;margin-bottom:6px}
       }); }catch(e){}
     });
   });
-
-  /* Packliste merken */
-  var boxes = [].slice.call(document.querySelectorAll("#packlist input"));
-  function upd(){
-    var n = boxes.filter(function(b){return b.checked}).length;
-    document.getElementById("packCount").textContent = n+" / "+boxes.length;
-    document.getElementById("packBar").style.width = (n/boxes.length*100)+"%";
-  }
-  boxes.forEach(function(b){
-    try{ b.checked = localStorage.getItem("wbgd_"+b.dataset.k) === "1"; }catch(e){}
-    b.addEventListener("change",function(){
-      try{ localStorage.setItem("wbgd_"+b.dataset.k, b.checked?"1":"0"); }catch(e){}
-      if(navigator.vibrate) navigator.vibrate(8);
-      upd();
-    });
-  });
-  upd();
 })();
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 </script>
