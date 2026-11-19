@@ -320,6 +320,16 @@ footer b{display:block;font-size:30px;margin-bottom:6px}
   }
   var cur = mark(); setInterval(mark,60000);
 
+  /* Beim Öffnen zum aktuellen Punkt springen */
+  function goNow(){
+    var c = mark();
+    if(!c) return;
+    var y = c.getBoundingClientRect().top + window.scrollY - window.innerHeight*0.3;
+    window.scrollTo({top:Math.max(0,y),behavior:"smooth"});
+  }
+  window.addEventListener("load",function(){setTimeout(goNow,350)});
+  document.addEventListener("visibilitychange",function(){ if(!document.hidden) setTimeout(goNow,200); });
+
   /* Nav: aktiven Abschnitt hervorheben */
   var links = [].slice.call(document.querySelectorAll("nav a"));
   if("IntersectionObserver" in window){
